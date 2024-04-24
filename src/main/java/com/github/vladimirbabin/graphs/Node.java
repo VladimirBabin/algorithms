@@ -1,5 +1,7 @@
 package com.github.vladimirbabin.graphs;
 
+import java.util.Objects;
+
 public class Node<T> {
     private T value;
     private int distance;
@@ -36,5 +38,17 @@ public class Node<T> {
     @Override
     public String toString() {
         return value.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Node<?> node)) return false;
+        return Objects.equals(value, node.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

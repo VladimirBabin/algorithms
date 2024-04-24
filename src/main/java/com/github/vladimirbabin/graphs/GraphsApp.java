@@ -9,44 +9,55 @@ public class GraphsApp {
     }
 
     private static void createAndSearchWeightedGraph() {
-        Graph<Node<String>> graph = new AdjacencyListsGraph<>();
+        WeightedGraph<String> graph = new WeightedGraph<>();
 
-        Node<String> vilnius = new Node<>("Vilnius");
-        Node<String> kaunas = new Node<>("Kaunas");
-        Node<String> panevezys = new Node<>("Panevezys");
-        Node<String> klaipeda = new Node<>("Klaipeda");
-        Node<String> palanga = new Node<>("Palanga");
-        Node<String> siauliai = new Node<>("Siauliai");
+        Node<String> paris = new Node<>("Paris");
         Node<String> riga = new Node<>("Riga");
-        Node<String> ukmerge = new Node<>("Ukmerge");
+        Node<String> stockholm = new Node<>("Stockholm");
+        Node<String> athens = new Node<>("Athens");
+        Node<String> rome = new Node<>("Rome");
+        Node<String> bern = new Node<>("Bern");
+        Node<String> berlin = new Node<>("Berlin");
+        Node<String> madrid = new Node<>("Madrid");
 
-        graph.addVertex(vilnius);
-        graph.addVertex(kaunas);
-        graph.addVertex(panevezys);
-        graph.addVertex(klaipeda);
-        graph.addVertex(palanga);
-        graph.addVertex(siauliai);
+        graph.addVertex(paris);
+        graph.addVertex(berlin);
+        graph.addVertex(stockholm);
+        graph.addVertex(athens);
+        graph.addVertex(rome);
+        graph.addVertex(bern);
         graph.addVertex(riga);
-        graph.addVertex(ukmerge);
+        graph.addVertex(madrid);
 
-        graph.addEdge(vilnius, kaunas);
-        graph.addEdge(vilnius, panevezys);
-        graph.addEdge(vilnius, ukmerge);
-        graph.addEdge(ukmerge, panevezys);
-        graph.addEdge(panevezys, siauliai);
-        graph.addEdge(vilnius, siauliai);
-        graph.addEdge(vilnius, klaipeda);
-        graph.addEdge(klaipeda, palanga);
-        graph.addEdge(kaunas, palanga);
-        graph.addEdge(vilnius, riga);
-        graph.addEdge(siauliai, riga);
-        graph.addEdge(panevezys, riga);
+        graph.addEdgeWithWeight(paris, berlin, 4);
+        graph.addEdgeWithWeight(paris, stockholm, 17);
+        graph.addEdgeWithWeight(paris, madrid, 3);
+        graph.addEdgeWithWeight(madrid, stockholm, 21);
+        graph.addEdgeWithWeight(stockholm, bern, 8);
+        graph.addEdgeWithWeight(paris, bern, 4);
+        graph.addEdgeWithWeight(bern, rome, 3);
+        graph.addEdgeWithWeight(paris, athens, 10);
+        graph.addEdgeWithWeight(athens, rome, 7);
+        graph.addEdgeWithWeight(berlin, rome, 4);
+        graph.addEdgeWithWeight(bern, berlin, 1);
+        graph.addEdgeWithWeight(bern, madrid, 13);
+        graph.addEdgeWithWeight(stockholm, berlin, 4);
+        graph.addEdgeWithWeight(paris, riga, 8);
+        graph.addEdgeWithWeight(stockholm, riga, 2);
 
         graph.print();
 
+        System.out.println("Before Dijkstra");
+        graph.printDistances();
+        graph.calculateDijkstraShortestPaths(bern);
+        System.out.println("After Dijkstra");
+        graph.printDistances();
+
+
+
         SearchContainer<Node<String>> container = new BreadthSearchContainer<>();
 
-        Set<Node<String>> spanningTree = graph.searchGraph(container, vilnius);
+        Set<Node<String>> spanningTree = graph.searchGraph(container, paris);
 
         System.out.println("\n" + "Search result: " + spanningTree);
     }
